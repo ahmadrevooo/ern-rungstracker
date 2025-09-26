@@ -89,9 +89,27 @@
       <section class="summary-panel" aria-labelledby="summary-heading">
         <div class="summary-header">
           <h2 id="summary-heading">Tagesübersicht</h2>
-          <div class="summary-date-picker">
-            <label class="sr-only" for="summary-date">Datum auswählen</label>
-            <input type="date" id="summary-date" />
+          <div class="summary-controls">
+            <div class="date-toggle" role="group" aria-label="Schnellauswahl Datum">
+              <button
+                type="button"
+                class="ghost-button"
+                data-date-shortcut="yesterday"
+              >
+                Gestern
+              </button>
+              <button
+                type="button"
+                class="ghost-button"
+                data-date-shortcut="today"
+              >
+                Heute
+              </button>
+            </div>
+            <div class="summary-date-picker">
+              <label class="sr-only" for="summary-date">Datum auswählen</label>
+              <input type="date" id="summary-date" />
+            </div>
           </div>
         </div>
         <div class="summary-cards" role="status" aria-live="polite">
