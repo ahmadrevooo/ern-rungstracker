@@ -5,6 +5,7 @@ const editForm = document.getElementById('edit-form');
 const summaryDateInput = document.getElementById('summary-date');
 const entryDateInput = document.getElementById('entry-date');
 const entriesBody = document.getElementById('entries-body');
+const dateShortcutButtons = document.querySelectorAll('[data-date-shortcut]');
 const totals = {
   calories: document.getElementById('total-calories'),
   protein: document.getElementById('total-protein'),
@@ -89,6 +90,7 @@ function renderEntries() {
   }
 
   updateTotals(filtered);
+  updateDateShortcutState();
 }
 
 function updateTotals(filteredEntries) {
@@ -112,6 +114,7 @@ function updateTotals(filteredEntries) {
 function resetForm() {
   entryForm.reset();
   entryDateInput.value = selectedDate;
+  summaryDateInput.value = selectedDate;
 }
 
 function handleFormSubmit(event) {
@@ -197,9 +200,13 @@ function initializeDates() {
 }
 
 function handleSummaryDateChange(event) {
-  selectedDate = event.target.value || selectedDate;
-  entryDateInput.value = selectedDate;
-  renderEntries();
+  const newDate = event.target.value;
+  if (!newDate) {
+    summaryDateInput.value = selectedDate;
+    return;
+  }
+
+  setSelectedDate(newDate);
 }
 
 function handleDialogCancel(event) {
@@ -215,11 +222,57 @@ function setupEventListeners() {
   entriesBody.addEventListener('click', handleTableClick);
 }
 
+function updateDateShortcutState() {
+  dateShortcutButtons.forEach((button) => {
+    const value = button.dataset.dateValue;
+    button.classList.toggle('is-active', value === selectedDate);
+  });
+}
+
+function setSelectedDate(newDate) {
+  selectedDate = newDate;
+  summaryDateInput.value = selectedDate;
+  entryDateInput.value = selectedDate;
+  renderEntries();
+}
+
+function computeDateShortcuts() {
+  const today = new Date();
+  const todayIso = today.toISOString().slice(0, 10);
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const yesterdayIso = yesterday.toISOString().slice(0, 10);
+
+  dateShortcutButtons.forEach((button) => {
+    const key = button.dataset.dateShortcut;
+    if (key === 'today') {
+      button.dataset.dateValue = todayIso;
+    } else if (key === 'yesterday') {
+      button.dataset.dateValue = yesterdayIso;
+    }
+  });
+}
+
+function setupDateShortcuts() {
+  dateShortcutButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const value = button.dataset.dateValue;
+      if (value) {
+        setSelectedDate(value);
+      }
+    });
+  });
+
+  updateDateShortcutState();
+}
+
 function init() {
   loadEntries();
+  computeDateShortcuts();
   initializeDates();
   renderEntries();
   setupEventListeners();
+  setupDateShortcuts();
 }
 
 window.addEventListener('DOMContentLoaded', init);

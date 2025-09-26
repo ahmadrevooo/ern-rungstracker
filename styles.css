@@ -29,7 +29,7 @@ body {
 
 .app-header,
 .app-footer {
-  max-width: 1100px;
+  max-width: 1280px;
   width: 100%;
   text-align: center;
   background: var(--panel-bg);
@@ -56,7 +56,7 @@ body {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1280px;
 }
 
 .tracker-panel,
@@ -70,6 +70,43 @@ body {
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.summary-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.summary-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.date-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(37, 99, 235, 0.1);
+  padding: 4px;
+  border-radius: 14px;
+}
+
+.date-toggle .ghost-button {
+  padding: 8px 14px;
+}
+
+.date-toggle .ghost-button.is-active {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 12px 20px -12px rgba(37, 99, 235, 0.8);
+}
+
+.summary-date-picker input[type='date'] {
+  min-width: 200px;
 }
 
 .tracker-panel h2,
@@ -345,6 +382,14 @@ body {
     border-color: rgba(37, 99, 235, 0.3);
   }
 
+  .date-toggle {
+    background: rgba(37, 99, 235, 0.2);
+  }
+
+  .date-toggle .ghost-button.is-active {
+    background: rgba(37, 99, 235, 0.95);
+  }
+
   .entries-table thead {
     background: rgba(148, 163, 184, 0.12);
     color: #e2e8f0;
@@ -352,5 +397,18 @@ body {
 
   .entries-table tbody tr:nth-child(even) {
     background: rgba(148, 163, 184, 0.16);
+  }
+
+  .entries-table th,
+  .entries-table td {
+    color: #f1f5f9;
+  }
+
+  .entries-table td[data-field] {
+    color: #e2e8f0;
+  }
+
+  .empty-row td {
+    color: #cbd5f5;
   }
 }
