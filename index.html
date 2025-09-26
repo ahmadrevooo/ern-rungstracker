@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ernährungstracker</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Ernährungstracker</h1>
+      <p>Behalte deine tägliche Ernährung mit Makronährstoffen im Blick.</p>
+    </header>
+
+    <main class="app-content">
+      <section class="tracker-panel" aria-labelledby="tracker-heading">
+        <h2 id="tracker-heading">Eintrag hinzufügen</h2>
+        <form id="entry-form" class="entry-form" autocomplete="off">
+          <div class="form-group">
+            <label for="entry-date">Datum</label>
+            <input type="date" id="entry-date" name="date" required />
+          </div>
+          <div class="form-group">
+            <label for="entry-name">Lebensmittel</label>
+            <input
+              type="text"
+              id="entry-name"
+              name="name"
+              placeholder="z.&nbsp;B. Haferflocken"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="entry-calories">Kalorien (kcal)</label>
+            <input
+              type="number"
+              id="entry-calories"
+              name="calories"
+              min="0"
+              step="1"
+              required
+            />
+          </div>
+          <div class="macro-grid">
+            <div class="form-group">
+              <label for="entry-protein">Eiweiß (g)</label>
+              <input
+                type="number"
+                id="entry-protein"
+                name="protein"
+                min="0"
+                step="0.1"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="entry-carbs">Kohlenhydrate (g)</label>
+              <input
+                type="number"
+                id="entry-carbs"
+                name="carbs"
+                min="0"
+                step="0.1"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="entry-fat">Fett (g)</label>
+              <input
+                type="number"
+                id="entry-fat"
+                name="fat"
+                min="0"
+                step="0.1"
+                required
+              />
+            </div>
+          </div>
+          <button type="submit" class="primary-button">Eintrag speichern</button>
+        </form>
+      </section>
+
+      <section class="summary-panel" aria-labelledby="summary-heading">
+        <div class="summary-header">
+          <h2 id="summary-heading">Tagesübersicht</h2>
+          <div class="summary-date-picker">
+            <label class="sr-only" for="summary-date">Datum auswählen</label>
+            <input type="date" id="summary-date" />
+          </div>
+        </div>
+        <div class="summary-cards" role="status" aria-live="polite">
+          <article class="summary-card">
+            <h3>Kalorien</h3>
+            <p id="total-calories">0</p>
+          </article>
+          <article class="summary-card">
+            <h3>Eiweiß</h3>
+            <p id="total-protein">0&nbsp;g</p>
+          </article>
+          <article class="summary-card">
+            <h3>Kohlenhydrate</h3>
+            <p id="total-carbs">0&nbsp;g</p>
+          </article>
+          <article class="summary-card">
+            <h3>Fett</h3>
+            <p id="total-fat">0&nbsp;g</p>
+          </article>
+        </div>
+
+        <div class="table-container" aria-live="polite">
+          <table class="entries-table">
+            <thead>
+              <tr>
+                <th scope="col">Lebensmittel</th>
+                <th scope="col">Kalorien</th>
+                <th scope="col">Eiweiß</th>
+                <th scope="col">Kohlenhydrate</th>
+                <th scope="col">Fett</th>
+                <th scope="col" class="actions-header">Aktionen</th>
+              </tr>
+            </thead>
+            <tbody id="entries-body">
+              <tr class="empty-row">
+                <td colspan="6">Noch keine Einträge für dieses Datum</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>
+        Deine Daten werden ausschließlich lokal im Browser gespeichert.
+        Aktualisiere die Seite, um neue Tage zu erfassen oder bestehende Einträge
+        zu bearbeiten.
+      </p>
+    </footer>
+
+    <template id="entry-row-template">
+      <tr>
+        <th scope="row" data-field="name"></th>
+        <td data-field="calories"></td>
+        <td data-field="protein"></td>
+        <td data-field="carbs"></td>
+        <td data-field="fat"></td>
+        <td class="entry-actions">
+          <button type="button" class="ghost-button" data-action="edit">Bearbeiten</button>
+          <button type="button" class="ghost-button" data-action="delete">Löschen</button>
+        </td>
+      </tr>
+    </template>
+
+    <dialog id="edit-dialog" aria-labelledby="edit-dialog-title">
+      <form method="dialog" id="edit-form" class="edit-form">
+        <h2 id="edit-dialog-title">Eintrag bearbeiten</h2>
+        <input type="hidden" id="edit-id" />
+        <div class="form-group">
+          <label for="edit-name">Lebensmittel</label>
+          <input type="text" id="edit-name" required />
+        </div>
+        <div class="form-group">
+          <label for="edit-calories">Kalorien (kcal)</label>
+          <input type="number" id="edit-calories" min="0" step="1" required />
+        </div>
+        <div class="macro-grid">
+          <div class="form-group">
+            <label for="edit-protein">Eiweiß (g)</label>
+            <input type="number" id="edit-protein" min="0" step="0.1" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-carbs">Kohlenhydrate (g)</label>
+            <input type="number" id="edit-carbs" min="0" step="0.1" required />
+          </div>
+          <div class="form-group">
+            <label for="edit-fat">Fett (g)</label>
+            <input type="number" id="edit-fat" min="0" step="0.1" required />
+          </div>
+        </div>
+        <menu class="dialog-actions">
+          <button type="button" class="ghost-button" value="cancel">Abbrechen</button>
+          <button type="submit" class="primary-button">Speichern</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

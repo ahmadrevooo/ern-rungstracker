@@ -1,0 +1,356 @@
+:root {
+  color-scheme: light dark;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  background-color: #f5f5f7;
+  color: #1f2933;
+  --panel-bg: #ffffffcc;
+  --panel-border: #d2d6dc;
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
+  --shadow: 0 20px 50px -25px rgba(15, 23, 42, 0.5);
+  --radius: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #e0ecff, #f5f5f7 55%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 16px 32px;
+  gap: 32px;
+}
+
+.app-header,
+.app-footer {
+  max-width: 1100px;
+  width: 100%;
+  text-align: center;
+  background: var(--panel-bg);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.app-header h1 {
+  margin: 0 0 8px;
+  font-size: clamp(2rem, 3vw + 1rem, 3rem);
+}
+
+.app-header p {
+  margin: 0;
+  color: #52616b;
+  font-weight: 500;
+}
+
+.app-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.tracker-panel,
+.summary-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 32px;
+  backdrop-filter: blur(18px);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tracker-panel h2,
+.summary-panel h2 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.entry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-group input {
+  border: 1px solid #cbd5f5;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.macro-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.primary-button,
+.ghost-button {
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease,
+    color 0.2s ease;
+}
+
+.primary-button {
+  border: none;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 12px 25px -12px rgba(37, 99, 235, 0.8);
+}
+
+.primary-button:hover,
+.primary-button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px -12px rgba(37, 99, 235, 0.9);
+}
+
+.primary-button:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 20px -12px rgba(37, 99, 235, 0.9);
+}
+
+.ghost-button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--accent);
+  padding: 10px 14px;
+  font-weight: 600;
+}
+
+.ghost-button:hover,
+.ghost-button:focus-visible {
+  color: #0f172a;
+  border-color: rgba(37, 99, 235, 0.2);
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.summary-date-picker input {
+  border: 1px solid #cbd5f5;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 1rem;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.summary-card {
+  border-radius: 16px;
+  padding: 20px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #1d4ed8;
+}
+
+.summary-card p {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.table-container {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.entries-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.entries-table th,
+.entries-table td {
+  padding: 14px 18px;
+  text-align: left;
+}
+
+.entries-table thead {
+  background: rgba(15, 23, 42, 0.05);
+  font-weight: 600;
+  color: #475569;
+}
+
+.entries-table tbody tr:nth-child(even) {
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.entries-table tbody tr:hover {
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.entries-table td[data-field] {
+  font-variant-numeric: tabular-nums;
+}
+
+.entries-table .actions-header,
+.entries-table .entry-actions {
+  text-align: right;
+}
+
+.entries-table .entry-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.entries-table .ghost-button {
+  padding: 6px 10px;
+  font-size: 0.95rem;
+}
+
+.empty-row td {
+  text-align: center;
+  padding: 32px;
+  color: #64748b;
+}
+
+.app-footer p {
+  margin: 0;
+  color: #52616b;
+  line-height: 1.6;
+}
+
+#edit-dialog {
+  border: none;
+  padding: 0;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  max-width: 420px;
+  width: min(90vw, 420px);
+}
+
+.edit-form {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.edit-form h2 {
+  margin: 0;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+.dialog-actions .primary-button,
+.dialog-actions .ghost-button {
+  padding: 10px 14px;
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 24px 12px 24px;
+  }
+
+  .tracker-panel,
+  .summary-panel {
+    padding: 24px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    background-color: #0f172a;
+    color: #e2e8f0;
+    --panel-bg: rgba(15, 23, 42, 0.75);
+    --panel-border: rgba(148, 163, 184, 0.4);
+    --shadow: 0 24px 60px -32px rgba(2, 6, 23, 0.85);
+  }
+
+  body {
+    background: radial-gradient(circle at top, #1e293b, #0f172a 65%);
+  }
+
+  .app-header p,
+  .app-footer p {
+    color: #cbd5f5;
+  }
+
+  .summary-card {
+    background: rgba(37, 99, 235, 0.12);
+    border-color: rgba(37, 99, 235, 0.3);
+  }
+
+  .entries-table thead {
+    background: rgba(148, 163, 184, 0.12);
+    color: #e2e8f0;
+  }
+
+  .entries-table tbody tr:nth-child(even) {
+    background: rgba(148, 163, 184, 0.16);
+  }
+}
